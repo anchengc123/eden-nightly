@@ -43,6 +43,39 @@ index edd1b0765d..4c129e474b 100644
              val clipBoard =
                  requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
              val clip = ClipData.newPlainText(getString(R.string.build), fullVersionText)
+diff --git a/src/android/app/src/main/java/org/yuzu/yuzu_emu/ui/main/MainActivity.kt b/src/android/app/src/main/java/org/yuzu/yuzu_emu/ui/main/MainActivity.kt
+index 538d8f6e49..358836e3ec 100644
+--- a/src/android/app/src/main/java/org/yuzu/yuzu_emu/ui/main/MainActivity.kt
++++ b/src/android/app/src/main/java/org/yuzu/yuzu_emu/ui/main/MainActivity.kt
+@@ -211,10 +211,11 @@ class MainActivity : AppCompatActivity(), ThemeProvider {
+         CoroutineScope(Dispatchers.IO).launch {
+             val packageId = applicationContext.packageName
+             val apkUrl = NativeLibrary.getUpdateApkUrl(version, packageId)
++            val fileName = apkUrl.substringAfterLast("/")
+             val apkFile = File(cacheDir, "update-$version.apk")
+ 
+             withContext(Dispatchers.Main) {
+-                showDownloadProgressDialog()
++                showDownloadProgressDialog(fileName)
+             }
+ 
+             val downloader = APKDownloader(apkUrl, apkFile)
+@@ -263,13 +264,14 @@ class MainActivity : AppCompatActivity(), ThemeProvider {
+     private var progressBar: LinearProgressIndicator? = null
+     private var progressMessage: MaterialTextView? = null
+ 
+-    private fun showDownloadProgressDialog() {
++    private fun showDownloadProgressDialog(fileName: String) {
+         val progressView = layoutInflater.inflate(R.layout.dialog_download_progress, null)
+         progressBar = progressView.findViewById(R.id.download_progress_bar)
+         progressMessage = progressView.findViewById(R.id.download_progress_message)
+ 
+         progressDialog = MaterialAlertDialogBuilder(this)
+             .setTitle(R.string.downloading_update)
++            .setMessage(fileName)
+             .setView(progressView)
+             .setCancelable(false)
+             .create()
 diff --git a/src/android/app/src/main/jni/native.cpp b/src/android/app/src/main/jni/native.cpp
 index f28f4a9b7b..57cb5bc736 100644
 --- a/src/android/app/src/main/jni/native.cpp
