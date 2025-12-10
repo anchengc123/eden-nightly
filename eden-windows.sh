@@ -27,9 +27,9 @@ echo "   Count: ${COUNT}"
 echo "   EXE Name: ${EXE_NAME}"
 
 # hook the updater to check my repo
-echo "-- Applying updater patch..."
-patch -p1 < ../patches/update.patch
-echo "   Done."
+#echo "-- Applying updater patch..."
+#patch -p1 < ../patches/update.patch
+#echo "   Done."
 
 # Apply ARM patch if building for ARM64
 if [[ "$ARCH" == "arm64" ]]; then
