@@ -18,6 +18,7 @@ on:
           - android
           - bsd
           - info
+          - win&android
         default: 'all'
 
 jobs:
@@ -166,12 +167,12 @@ jobs:
           path: eden/appbundle
 
   android:
-    if: github.event.inputs.job_to_run == 'all' || github.event.inputs.job_to_run == 'android'
+    if: github.event.inputs.job_to_run == 'all' || github.event.inputs.job_to_run == 'android' || github.event.inputs.job_to_run == 'win&android'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        target: [Replace, Coexist, Optimized, Legacy, ChromeOS]
+        target: [Legacy]
     name: "Android (${{ matrix.target }})"
     env:
       TARGET: ${{ matrix.target }}
@@ -218,7 +219,7 @@ jobs:
           path: eden/src/android/artifacts/
 
   windows:
-    if: github.event.inputs.job_to_run == 'all' || github.event.inputs.job_to_run == 'windows'
+    if: github.event.inputs.job_to_run == 'all' || github.event.inputs.job_to_run == 'windows' || github.event.inputs.job_to_run == 'win&android'
     runs-on: ${{ matrix.runs-on }}
     name: "Windows ${{ matrix.toolchain }} ${{ matrix.optimize }} (${{ matrix.arch }})"
     strategy:
@@ -226,7 +227,7 @@ jobs:
       matrix:
         include:
            - toolchain: msvc
-             optimize: PGO
+             optimize: normal
              arch: x86_64
              runs-on: windows-latest
 #           - toolchain: msvc
@@ -241,10 +242,10 @@ jobs:
              optimize: PGO
              arch: x86_64
              runs-on: windows-latest
-#           - toolchain: msys2
-#             optimize: PGO
-#             arch: x86_64
-#             runs-on: windows-latest
+           - toolchain: msys2
+             optimize: PGO
+             arch: x86_64
+             runs-on: windows-latest
 #           - toolchain: msys2
 #             optimize: normal
 #             arch: x86_64
