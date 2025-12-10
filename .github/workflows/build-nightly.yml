@@ -172,7 +172,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [Legacy]
+        target: [legacy]
     name: "Android (${{ matrix.target }})"
     env:
       TARGET: ${{ matrix.target }}
