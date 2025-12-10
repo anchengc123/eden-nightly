@@ -12,14 +12,14 @@ echo "   Count: $COUNT"
 echo "   APK name: $APK_NAME"
 
 # hook the updater to check my repo
-echo "-- Applying updater patch..."
-git apply ../patches/update.patch
-echo "   Done."
+#echo "-- Applying updater patch..."
+#git apply ../patches/update.patch
+#echo "   Done."
 
 # hook apk fetcher and installer
-echo "-- Applying apk fetcher and installer patch..."
-git apply ../patches/android.patch
-echo "   Done."
+#echo "-- Applying apk fetcher and installer patch..."
+#git apply ../patches/android.patch
+#echo "   Done."
 
 if [ "$TARGET" = "Coexist" ]; then
     # Change the App name and application ID to make it coexist with official build
