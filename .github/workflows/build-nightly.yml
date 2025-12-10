@@ -18,7 +18,7 @@ on:
           - android
           - bsd
           - info
-        default: 'windows'
+        default: 'all'
 
 jobs:
   info:
@@ -237,10 +237,10 @@ jobs:
 #             optimize: normal
 #             arch: x86_64
 #             runs-on: windows-latest
-#           - toolchain: clang
-#             optimize: PGO
-#             arch: x86_64
-#             runs-on: windows-latest
+           - toolchain: clang
+             optimize: PGO
+             arch: x86_64
+             runs-on: windows-latest
 #           - toolchain: msys2
 #             optimize: PGO
 #             arch: x86_64
